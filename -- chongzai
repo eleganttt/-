@@ -1,0 +1,54 @@
+#include<iostream>
+using namespace std;
+
+class u
+{
+	friend ostream& operator<<(ostream& cout, u u1);
+
+public:
+	u()
+	{
+		m_a = 10;
+	}
+	//前递减
+	u& operator--() {      
+		m_a--;
+
+		return *this;
+	}
+	//后递减
+	u operator--(int) {  //返回的是值 副本。
+		u temp = *this;
+		m_a--;
+		return temp;
+
+	}
+
+private:
+	int m_a;
+
+	
+};
+
+ostream& operator<<(ostream& cout,u u1) {  // 如果使用引用的话，编译器认为u* const u1 = & u1-- 指向的地址改变了
+                                           //u* const u1 = & --u1 函数重载地址没变
+	cout << u1.m_a << endl;
+	return cout;
+}
+
+void test01()
+{
+	u u1;
+	cout << u1 << endl;
+	cout << u1-- << endl;
+	cout << --u1 << endl;
+}
+
+int main()
+{
+	test01();
+
+	system("pause");
+
+	return 0;
+}//洪良昆 2023.2.15
